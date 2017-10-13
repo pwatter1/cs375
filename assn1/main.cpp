@@ -7,7 +7,7 @@
 using namespace std;
 
 
-int findLCS(string str1, int i, string str2, int j) 
+int findLCSBU(string str1, int i, string str2, int j) 
 {
 	int len1 = str1.length();
 	int len2 = str2.length();
@@ -55,6 +55,7 @@ int findLCS(string str1, int i, string str2, int j)
 }
 
 
+
 int main(int argc, char **argv) 
 {
 	if (argc < 3) {
@@ -65,22 +66,27 @@ int main(int argc, char **argv)
 	string str1, str2;
 
 	ifstream inx(argv[1]);
-	if (!inx) 
-	{
+	ifstream iny(argv[2]);
+	
+	if (!inx) {
 		cout << "Error: cannot open %s\n" << argv[1];
 		return -1;
 	}
-	inx >> str1;
-
-	ifstream iny(argv[2]);
-	if (!iny) 
-	{
+	if (!iny) {
 		cout << "Error: cannot open %s\n" << argv[2];
 		return -1;
 	}
+
+	inx >> str1;
 	iny >> str2;
 
-	findLCS(str1, str1.length(), str2, str2.length());
+
+	if (argv[3] == "output.txt") 
+		findLCSBU(str1, str1.length(), str2, str2.length());
+	else if (argv[3] == "output2.txt")
+		findLCSREC(str1, str1.length(), str2, str2.length());
+	else
+		findLCSTD(str1, str1.length(), str2, str2.length());
 
 	return 0;
 }	
