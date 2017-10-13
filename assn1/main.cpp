@@ -54,19 +54,6 @@ int findLCSBU(string str1, int i, string str2, int j)
 	return 0;
 }
 
-// helper
-int findLCSREC(string str1, string str2)
-{
-	int lcs = findLCSREC(str1, str1.length(), str2, str2.length());
-
-	ofstream out;
-	out.open("output2.txt");
-	out << lcs << endl;
-	out << rt << endl;
-	out.close()
-	return 0;
-}
-
 int findLCSREC(string str1, int i, string str2, int j)
 {
 	if (i == 0 || j == 0) return 0;
@@ -74,10 +61,26 @@ int findLCSREC(string str1, int i, string str2, int j)
 	else return max(findLCSREC(str1, i, str2, j-1), findLCSREC(str1, i-1, str2, j));
 }
 
+// helper
+int findLCSRECHelper(string str1, string str2)
+{
+	int lcs = findLCSREC(str1, str1.length(), str2, str2.length());
+	string rt = "O(n^2)";
+
+	// format output
+	ofstream out;
+	out.open("output2.txt");
+	out << lcs << endl;
+	out << rt << endl;
+	out.close();
+
+	return 0;
+}
+
 //helper
 int max(int a, int b) 
 {
-	return (a<b) ? b : a;
+	return (a < b) ? b : a;
 }
 
 int findLCSTD(string str1, int i, string str2, int j) 
@@ -112,19 +115,18 @@ int main(int argc, char **argv)
 	inx >> str1;
 	iny >> str2;
 
-
-	if (argv[3] == "output.txt") { 
+	if (strcmp(argv[3],"output.txt") == 0) { 
 		if (findLCSBU(str1, str1.length(), str2, str2.length()) != 0) {
 			cout << "Error: findLCSBU() failed\n";
 		}
-	else if (argv[3] == "output2.txt")
-		if (findLCSREC(str1, str2) != 0) {
+	} else if (strcmp(argv[3],"output2.txt") == 0) {
+		if (findLCSRECHelper(str1, str2) != 0) {
 			cout << "Error: findLCSREC() failed\n";
 		}
-	else
+	} else {
 		if (findLCSTD(str1, str1.length(), str2, str2.length()) != 0) {
 			cout << "Error: findLCSTD() failed\n";
 		}
-
+	}
 	return 0;
 }	
